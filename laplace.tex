@@ -8,3 +8,158 @@ and \emph{Poisson equation}
 \[\Delta u = f.\]
 A function $u$ which satisfies the Laplace equation is called \emph{harmonic}.
 
+\subsection{Separation of Variables}
+
+For simple geometries, we can often solve problems involving the Laplace equation using the method of \emph{separation of variables}. We demonstrate this method using a few examples.
+
+\begin{example}
+
+Consider the problem of finding $u$ satisfying
+\[
+\Delta u = 0 \text{ in $\Omega$}, \quad
+u = h \text{ on $\partial \Omega$}
+\]
+for a given function $h$. This is called the \emph{Dirichlet problem} for the Laplace equation. Let $\Omega$ be the open unit square $(0,1) \times (0,1)$ and let $h = 0$ on all sides but the bottom, where $h = h(x)$. We propose a solution of the form $u(x,y) = X(x) Y(y)$. Substituting this expression into the PDE yields
+\[X''Y + XY'' = 0\]
+and so
+\[\frac{X''}{X} = -\frac{Y''}{Y} = \pm\lambda^2\]
+where $\pm\lambda^2$ is the common ratio. This gives a pair of ODEs
+\[
+X''\mp\lambda^2 X = 0, \quad
+Y''\pm\lambda^2 Y = 0.
+\]
+The general solution to the equation for $X$ is \[X(x) = a \cos(\lambda x) + b \sin(\lambda x)\] if the common ratio is negative or \[X(x) = a \cosh(\lambda x) + b \sinh(\lambda x)\] otherwise. We must now determine the sign of the common ratio and all permissible values of $\lambda$. From the original problem, we obtain the boundary conditions $X(0) = X(1) = 0$. It is impossible to satisfy these conditions if the common ratio is positive. Examining the general solution for a negative ratio, it is clear that we must have $a = 0$. The coefficient $b$ is arbitrary so long as $\lambda = n\pi$ for $n = 1,2,\dots$, thus
+\[X_n(x) = b_n \sin(n\pi x)\]
+are solutions to the boundary value problem. Marching on, we find that the general solution to the equation for $Y$ is
+\[Y(y) = c \cosh(\lambda y) + d \sinh(\lambda y).\]
+The boundary condition $Y(1) = 0$ comes directly from the PDE. We can also somewhat arbitrarily set $Y(0) = 1$ and allow the remaining degree of freedom in $X$ to enforce the boundary condition on the bottom. So
+\[Y_n(y) = \cosh(n \pi y) - \coth(n \pi)\sinh(n \pi y) .\]
+Putting this all together, we have that functions
+\[
+u_n(x,y) = X_n(x)Y_n(y) = b_n \sin(n\pi x)\bigl(\cosh(n \pi y) - \coth(n \pi)\sinh(n \pi y)\bigr)
+\]
+satisfy the boundary conditions on three of the four sides of the square. To satisfy the remaining condition, we observe that any superposition of these solutions to the PDE is also a solution. Thus, we must have
+\[u(x,y) = \sum_{n = 1}^\infty u_n(x,y) = \sum_{n = 1}^\infty b_n \sin(n\pi x)\bigl(\cosh(n \pi y) - \coth(n \pi)\sinh(n \pi y)\bigr).\]
+On the bottom boundary we require
+\[u(x,0) = \sum_{n = 1}^\infty b_n \sin(n\pi x) = h(x) .\]
+Note that the functions $\sin(n \pi x)$ are an orthogonal basis for square integrable functions, so we can multiply by one of them and integrate in order to determine the coefficients
+\[b_n = 2\int_0^1 h(x)\sin(n\pi x)\,dx .\]
+This completes our solution of the given Dirichlet problem.
+\end{example}
+
+\begin{remark}
+We can use the same technique to solve a Dirichlet problem for the Laplace equation where boundary data is given on all four sides of the square. Just solve four simpler problems, each with data only given on one side and the others set to zero, then add them together.
+\end{remark}
+
+\begin{remark}
+That we obtained an orthogonal basis of functions from the method of separation of variables is not surprising. It is a result of the fact that the ODEs and their boundary conditions form a \emph{Sturm-Liouville problem}.
+\end{remark}
+
+\begin{remark}
+Instead of specifying the values of the solution on the boundary, we could specify the normal derivative. This is called the \emph{Neumann problem} for the Laplace equation. We could even specify mixed boundary conditions, although this seems to be less common in practice.
+\end{remark}
+
+\begin{example}
+Let us now consider the Dirichlet problem on the unit disc with $h = h(\theta)$ on the boundary, the unit circle. It is not hard to show that the Laplace equation is given by
+\[\Delta u = u_{rr} + \frac1r u_r + \frac{1}{r^2} u_{\theta\theta} = 0\]
+in the usual polar coordinates. We again solve this problem using separation of variables. Trying $u(r,\theta) = R(r)\Theta(\theta)$ yields
+\[R''\Theta + \frac{1}{r} R'\Theta + \frac{1}{r^2} R\Theta'' = 0\]
+and so
+\[\frac{\Theta''}{\Theta} = -\frac{r^2 R'' + r R'}{R} = \pm \lambda^2 .\]
+This gives a pair of ODEs
+\[\Theta'' \mp \lambda^2 \Theta = 0, \quad r^2 R'' + r R' \pm \lambda^2 R = 0.\]
+Requiring that $\Theta$ have periodic boundary conditions, the common ratio must be negative and $\lambda = n$ for $n = 0,1,2,\dots$, thus
+\[\Theta_n(\theta) = a_n \cos(n\theta) + b_n \sin(n\theta).\]
+Next, we try a solution for the equation for $R$ of the form $R(r) = r^\alpha$. The ODE becomes
+\[(\alpha^2 - n^2)\,r^\alpha = 0\]
+which gives a combination of two linearly independent solutions
+\[R_n(r) = c_n r^n + \frac{d_n}{r^n} \]
+for $n \geq 1$. We only have the constant solution if $n = 0$, so we need to find another. In this case, we can write the ODE as
+\[r^2 R_0'' + r R_0' = 0\]
+which becomes
+\[r R_0'' + R_0' = 0\]
+after dividing by $r$. This has the additional solution $R_0(r) = \log r$, so in general
+\[R_0(r) = c_0 + d_0 \log r.\]
+We set $R(1) = 1$ and allow the degrees of freedom in $\Theta$ to enforce the boundary condition on the unit circle. Furthermore, we insist that $R$ remain bounded, which eliminates the $1/r^n$ and $\log n$ solutions. So, in the end
+\[R_n(\theta) = r^n .\]
+Putting this all together, we have that functions
+\[u_n(r,\theta) = R_n(r)\Theta_n(\theta) = r^n\bigl(a_n \cos(n\theta) + b_n \sin(n\theta)\bigr)\]
+solve the PDE. To satisfy the boundary condition on the circle, we construct the superposition
+\[u(r,\theta) = \sum_{n = 0}^\infty u_n(r,\theta) = \sum_{n = 0}^\infty r^n\bigl(a_n \cos(n\theta) + b_n \sin(n\theta)\bigr)\]
+and project onto the functions $\cos(n\theta)$ and $\sin(n\theta)$ at the boundary in order to determine the coefficients $a_n$ and $b_n$. Integrating yields
+\[a_n = \frac{1}{\pi} \int_0^{2\pi} h(\theta) \cos(n\theta)\,d\theta ,\quad b_n = \frac{1}{\pi} \int_0^{2\pi} h(\theta) \sin(n\theta)\,d\theta\]
+for $n = 1,2,\dots$ and
+\[a_0 = \frac{1}{2\pi} \int_0^{2\pi} h(\theta)\,d\theta .\]
+This completes our solution of the given Dirichlet problem, but let us see if we can't put it in a ``nicer'' form. Substituting $a_n$ and $b_n$ into the series solution gives
+\begin{align*}
+u(r,\theta) &= \frac{1}{2\pi} \int_0^{2\pi} h(\phi)\,d\phi \\
+	&\qquad + \sum_{n = 1}^\infty r^n\Biggl(\biggl(\frac{1}{\pi} \int_0^{2\pi} h(\phi) \cos(n\phi)\,d\phi\biggr) \cos(n\theta)\Biggr) \\ &\qquad + \sum_{n = 1}^\infty r^n\Biggl(\biggl(\frac{1}{\pi} \int_0^{2\pi} h(\phi) \sin(n\phi)\,d\phi\biggr) \sin(n\theta)\Biggr) \\
+	&= \frac{1}{2\pi} \int_0^{2\pi} h(\phi) \Biggl(1 + 2\sum_{n = 1}^\infty r^n \bigl(\cos(n\phi)\cos(n\theta) + \sin(n\phi)\sin(n\theta)\bigr)\Biggr)\,d\phi\\
+	&= \frac{1}{2\pi} \int_0^{2\pi} h(\phi) \Biggl(1 + 2\sum_{n = 1}^\infty r^n \cos\bigl(n(\theta-\phi)\bigr)\Biggr)\,d\phi .
+\end{align*}
+Somewhat magically
+\begin{align*}
+1+2\sum_{n = 1}^\infty r^n \cos\bigl(n(\theta-\phi)\bigr) &= 1 + \sum_{n = 1}^\infty r^n \Bigl(\exp\bigl(in(\theta-\phi)\bigr) + \exp\bigl(-in(\theta-\phi)\bigr)\Bigr) \\
+	&= 1 + \sum_{n = 1}^\infty \Bigl(r \exp\bigl(i(\theta-\phi)\bigr)\Bigr)^n + \sum_{n = 1}^\infty \Bigl(r \exp\bigl(-i(\theta-\phi)\bigr)\Bigr)^n \\
+	&= 1 + \frac{r \exp\bigl(i(\theta-\phi)\bigr)}{1-r\exp\bigl(i(\theta-\phi)\bigr)} + \frac{r \exp\bigl(-i(\theta-\phi)\bigr)}{1-r\exp\bigl(-i(\theta-\phi)\bigr)} \\
+	&= \frac{1-r^2}{1-2r\cos(\theta-\phi)+r^2}.
+\end{align*}
+Thus
+\[u(r,\theta) = \frac{1}{2\pi} \int_0^{2\pi} h(\phi)\biggl(\frac{1-r^2}{1-2r\cos(\theta-\phi)+r^2}\biggr)\,d\phi. \]
+We're not quite done. Let us express this solution in cartesian coordinates by taking $x$ to be a point in $\Omega$ with coordinates $(r,\theta)$ and $\xi$ to be a point on $\partial \Omega$ with coordinates $(1,\phi)$. Then $|x-\xi|^2 = 1 + r - 2r\cos(\theta-\phi)$ by the law of cosines. So
+\[u(x) = \frac{1}{2\pi}\int_{\partial\Omega} \frac{u(\xi)\bigl(1-|x|^2\bigr)}{|x-\xi|^2}\,ds_\xi = \frac{1-|x|^2}{2\pi}\int_{\partial\Omega} \frac{u(\xi)}{|x-\xi|^2}\,ds_y.\]
+This is called the \emph{Poisson formula} for a solution of the Laplace equation on the unit disc.
+\end{example}
+
+\begin{remark}
+The formula we derived hints at a more general representation of solutions to the Laplace and Poisson equations in terms of so-called \emph{Green's functions}. While a full treatment of Green's functions is beyond the scope of this course, we will encounter them on occasion.
+\end{remark}
+
+\begin{remark}
+The previous examples contains many situations where we should probably address convergence. We conveniently ignore such issues and leave it to the motivated reader to justify everything in full rigor.
+\end{remark}
+
+\subsection{Mean Value Formulas}
+
+Harmonic functions have many remarkable properties, one of which being that their pointwise values are intimately connected to their values everywhere else in domain. Let us establish some notation that we will use going forward.
+
+Denote by $B(x,r)$ the closed ball in $\mathbb{R}^n$ centered at $x$ of radius $r$. Then $\partial B(x,r)$ is the corresponding sphere. Denote by $\alpha(n)$ the volume of the unit ball $B(0,1)$ in $\mathbb{R}^n$. Then $r^n\alpha(n)$ is the volume of the ball $B(x,r)$. It follows by differentiation that $n r^{n-1} \alpha(n)$ is the surface area of the sphere $\partial B(x,r)$.
+
+Denote the average of a function $f$ over the ball $B(x,r)$ by
+\[\dashint_{B(x,r)} f(x)\,dx = \frac{1}{r^n \alpha(n)} \int_{B(x,r)} f(x)\,dx\]
+and the average over the sphere $\partial B(x,r)$ by
+\[\dashint_{\partial B(x,r)} f(x)\,dS_x = \frac{1}{n r^{n-1} \alpha(n)} \int_{\partial B(x,r)} f(x)\,dS_x.\]
+We can now state the following theorem.
+
+\begin{theorem}[Mean Value Formulas for the Laplace Equation]
+Let $u \in C^2(\Omega)$ be a harmonic function. Then
+\[u(x) = \dashint_{\partial B(x,r)} u(y)\,dS_y = \dashint_{B(x,r)} u(y)\,dy\]
+for each ball $B(x,r) \subset \Omega$.
+\begin{proof}
+Define the function
+\[\phi(r) = \dashint_{\partial B(x,r)} u(y)\,dS_y.\]
+We can perform a change of variable $y = x+rz$ to find
+\[\phi(r) = \dashint_{\partial B(0,1)} u(x+rz)\,dS_z,\]
+observing that the factor of $r^{n-1}$ emerging from the change of surface element exactly cancels the $r^{n-1}$ from averaging. Then
+\[\phi'(r) = \dashint_{\partial B(0,1)} Du(x+rz)\cdot z\,dS_z\]
+and reversing the change of variable
+\[\phi'(r) = \dashint_{\partial B(x,r)} Du(y)\cdot \frac{y-x}{r}\,dS_y.\]
+The integrand is exactly the inner product of $Du$ and the outward pointing unit normal on the sphere, so we apply the divergence theorem. This yields
+\[\phi'(r) = \frac{r}{n}\ \dashint_{B(x,r)} \Delta u(y)\,dy,\]
+with the factor $r/n$ coming from the difference between the surface area of the sphere and the volume of the ball. But $u$ is harmonic, so $\phi'(r) = 0$. Thus we have
+\[\phi(r) = \lim_{\rho \rightarrow 0} \phi(\rho) = u(x)\]
+since $u$ is continuous. This proves the first formula. The second formula follows from the first since
+\[\int_{B(x,r)}u(y)\,dy = \int_0^r \int_{\partial B(x,\rho)} u(\rho,\omega)\,dS_\omega\,d\rho = u(x) \int_0^r n\rho^{n-1}\alpha(n)\,d\rho = r^n\alpha(n)u(x). \qedhere\]
+\end{proof}
+\end{theorem}
+
+\begin{theorem}[Converse to the Mean Value Property]
+If a function $u \in C^2(\Omega)$ satisfies
+\[u(x) = \dashint_{\partial B(x,r)} u(y)\,dy\]
+for each ball $B(x,r) \subset \Omega$, then $u$ is harmonic.
+\begin{proof}
+Suppose $\Delta u(x) \neq 0$ at a point $x \in \Omega$. Say $\Delta u(x) > 0$. Then there must exist a ball $B(x,r)$ in which $\Delta u > 0$ throughout. Following the previous proof, we have $\phi'(r) = 0$ since the mean value property is satisfied in $\Omega$. But also
+\[\phi'(r) = \frac{r}{n}\ \dashint_{B(x,r)} \Delta u(y)\,dy > 0.\]
+This is a contradiction.
+\end{proof}
+\end{theorem}

@@ -1,10 +1,41 @@
 \documentclass[12pt,fleqn]{article}
 
 \usepackage{amsmath,amssymb,amsthm}
-\usepackage[letterpaper]{geometry}
+\usepackage[letterpaper,margin=1in]{geometry}
 \usepackage[parfill]{parskip}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+
+\theoremstyle{definition}
+\newtheorem{example}{Example}
+\newtheorem*{remark}{Remark}
+
+% fix amsthm paragraph spacing
+\begingroup
+    \makeatletter
+    \@for\theoremstyle:=definition,remark,plain\do{%
+        \expandafter\g@addto@macro\csname th@\theoremstyle\endcsname{%
+            \addtolength\thm@preskip\parskip
+            }%
+        }
+\endgroup
+
+% macro for mean integral
+\def\Xint#1{\mathchoice
+	{\XXint\displaystyle\textstyle{#1}}%
+	{\XXint\textstyle\scriptstyle{#1}}%
+	{\XXint\scriptstyle\scriptscriptstyle{#1}}%
+	{\XXint\scriptscriptstyle\scriptscriptstyle{#1}}%
+\!\int}
+\def\XXint#1#2#3{{\setbox0=\hbox{$#1{#2#3}{\int}$}
+	\vcenter{\hbox{$#2#3$}}\kern-.5\wd0}}
+\def\ddashint{\Xint=}
+\def\dashint{\Xint-}
 
 \begin{document}
+
+\tableofcontents
 
 \input{laplace.tex}
 
